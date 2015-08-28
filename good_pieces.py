@@ -1,0 +1,36 @@
+GOOD_PIECES = """
+xx
+-
+x
+x
+-
+xxx
+-
+xx
+x
+-
+xx
+ x
+-
+ x
+xx
+-
+xxxx
+-
+xxx
+x
+-
+xxxx
+xx
+-
+xx
+xx
+-
+xx
+ x
+ x
+ x
+-
+x
+xxxx
+"""

@@ -1,29 +1,27 @@
 from hey import *
+from good_pieces import *
 from random import *
 from random import randint as rd
 import time
 
-def explode(table, x, y, depth_left=4):
-    if depth_left <= 0:
-        return 0
-    if not bound_checks(x, y, table) or table[y][x] != '_':
-        return 0
-    table[y][x] = str(depth_left)[-1]
-    if rd(0,100) > 99:
-        os.system('clear')
-        pptable(table)
-        time.sleep(0.4)
-    s = 1
-    dirs = [(1, 0),(0, 1), (-1 , 0), (0, -1)]
-    shuffle(dirs)
-    for dx, dy in dirs:
-        depth_left -= rd(0,2)
-        s += explode(table, x+dx, y+dy, depth_left-1)
-    return s
+def total_size(pieces):
+    return sum([piece_size(p) for p in pieces])
 
-import time, os
-while True:
-    W, H = 300, 100
-    table = empty(W, H)
-    for _ in range(10):
-        explode(table,rd(0,W),rd(0,H),depth_left=rd(0,1000))
+def gen(w, h):
+    good_pieces = parse(GOOD_PIECES)
+    pieces = []
+    while True:
+        pieces.append(choice(good_pieces))
+        s = total_size(pieces)
+        if s == w*h:
+            sol = ssolve(pieces, w, h)
+            if sol != None:
+                pptable(sol)
+                return pieces
+            else:
+                print('no sol')
+        if s >= w*h:
+            print('back to sq. one', s)
+            pieces = []
+
+gen(5,5)

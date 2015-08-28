@@ -1,6 +1,12 @@
 from consts import *
 from copy import deepcopy
 
+"""
+strategies
+- never deepcopy during solve and always modify the same inst.
+- make the solve fast enough to generate new puzzle
+"""
+
 def ppi(p):
     for x in p: print(x)
 
@@ -90,8 +96,11 @@ def solve(pieces, table):
             except AssertionError:
                 pass
 
+def ssolve(pieces, w, h):
+    return solve(sort_by_size(pieces), empty(w, h))
+
 if __name__ == '__main__':
-    sol = solve(sort_by_size(parse(PIECES)), empty(W,H))
+    sol = ssolve(parse(PIECES), W, H)
     print('SOOOLUUUTIOOOON\n===')
     if sol == None:
         print('NOT SOLUTION FOUND :(')

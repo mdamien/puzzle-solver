@@ -1,40 +1,21 @@
-W, H = 10, 7
+W, H = 9, 3
 
 PIECES = """
-  xx
-xxxxx
--
- xxx
-xxx
-  x
--
-x
-xxx
- xx
-  x
--
- xx
-xxx
- xx
--
-x
-xxx
-  x
-  xx
-  x
--
- x xx
 xxxx
+  x
 -
- x
-xxxx
- x
--
- x
 xx
-x
-x
 -
-xxxxx
-x x
+ xx
+xx
+-
+ x
+xxx
+-
+xxx
+ xx
+-
+xxxx
+-
+xxx
 """

@@ -1,10 +1,9 @@
-from consts import *
 from copy import deepcopy
 
 """
 strategies
 - never deepcopy during solve and always modify the same inst.
-- make the solve fast enough to generate new puzzle
+- make the solve fast enough to generate bigger puzzles
 """
 
 def ppi(p):
@@ -16,10 +15,15 @@ def ppis(pieces):
 def pptable(table):
     for line in table: print(''.join(line))
 
-def parse(pieces):
+def parse_pieces(pieces):
     pieces = [x.split('\n') for x in pieces.split('-')]
     pieces = [[x.replace('x',str(i)) for x in p if x.strip() != ''] for i, p in enumerate(pieces)]
     return pieces
+
+def parse(level):
+    splitted = level.split('\n')
+    w, h = (int(x) for x in splitted[:2])
+    return parse_pieces('\n'.join(splitted[2:])), w, h
 
 def empty(w, h):
     return [['_' for _ in range(w)] for _ in range(h)]
@@ -80,8 +84,6 @@ def impossible_cells(table, pieces):
 def solve(pieces, table):
     if len(pieces) == 0:
         return table
-    if len(pieces) == 5:
-        islands_sizes(table)
     if impossible_cells(table, pieces):
         return
     W, H = len(table[0]), len(table)
@@ -100,9 +102,13 @@ def ssolve(pieces, w, h):
     return solve(sort_by_size(pieces), empty(w, h))
 
 if __name__ == '__main__':
-    sol = ssolve(parse(PIECES), W, H)
+    import sys
+    file = sys.argv[1] if len(sys.argv) > 1 else 'puzzles/1'
+    print('solving', file)
+    pieces, w, h = parse(open(file).read())
+    sol = ssolve(pieces, w, h)
     print('SOOOLUUUTIOOOON\n===')
     if sol == None:
-        print('NOT SOLUTION FOUND :(')
+        print('NO SOLUTION FOUND :(')
     else:
         pptable(sol)
